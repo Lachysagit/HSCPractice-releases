@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account Created — HSCPractice</title>
+  <style>
+    :root {
+      --navy: #1a2744;
+      --cream: #f5f0e8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background-color: var(--cream);
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 48px 40px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+    .tick { font-size: 48px; margin-bottom: 16px; }
+    h1 { font-size: 22px; font-weight: 700; margin-bottom: 12px; color: var(--navy); }
+    p { font-size: 15px; color: #555; line-height: 1.5; margin-bottom: 28px; }
+    button {
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 24px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    button:hover { opacity: 0.85; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="tick">&#10003;</div>
+    <h1>Account created</h1>
+    <p>You can close this tab and log in to HSCPractice.</p>
+    <button onclick="closeTab()">Close tab</button>
+  </div>
+  <script>
+    function closeTab() {
+      // window.close() is blocked when the tab wasn't opened via window.open().
+      // Reassigning the opener tricks most browsers into allowing the close.
+      window.open('', '_self', '');
+      window.close();
+    }
+    setTimeout(closeTab, 300);
+  </script>
+</body>
+</html>

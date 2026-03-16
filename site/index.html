@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HSCPractice — Exam Preparation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  /* ─── CSS Variables ─── */
+  :root {
+    --cream:        #faf8f3;
+    --cream-dark:   #f3efe6;
+    --ink:          #111827;
+    --ink-mid:      #1f2937;
+    --ink-light:    #4b5563;
+    --rule:         rgba(26,26,46,0.07);
+    --rule-strong:  rgba(26,26,46,0.15);
+    --navy:         #1e3a5f;
+    --navy-light:   #2a4f82;
+    --accent:       #c9a84c;
+    --accent-light: #e8c96d;
+    --green:        #2d6a4f;
+    --green-bg:     #e8f5ee;
+    --green-border: #a8d5b8;
+    --amber:        #92400e;
+    --amber-bg:     #fef3c7;
+    --amber-border: #f6d860;
+    --blue:         #1e40af;
+    --blue-bg:      #eff6ff;
+    --blue-border:  #bfdbfe;
+    --line-height:  28px;
+    --radius:       6px;
+    --shadow:       0 2px 12px rgba(26,26,46,0.08);
+    --shadow-md:    0 4px 24px rgba(26,26,46,0.12);
+  }
+
+  /* ─── Reset & Base ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--cream);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── Lined paper background ─── */
+  .lined-bg {
+    background-color: var(--cream);
+    background-image:
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent calc(var(--line-height) - 1px),
+        var(--rule) calc(var(--line-height) - 1px),
+        var(--rule) var(--line-height)
+      );
+    background-size: 100% var(--line-height);
+    background-attachment: local;
+  }
+
+  /* ─── Nav / Header ─── */
+  nav {
+    background: var(--navy);
+    color: #fff;
+    padding: 0 clamp(16px, 4vw, 48px);
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+
+  nav .nav-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    font-weight: 500;
+  }
+
+  nav .nav-ver {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent-light);
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* ─── Page wrapper ─── */
+  .page-outer {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    padding-left: clamp(40px, 6vw, 72px);
+  }
+
+  .margin-line {
+    width: 2px;
+    background: rgba(180, 40, 40, 0.55);
+    flex-shrink: 0;
+    margin: clamp(20px, 3vw, 40px) 0;
+    border-radius: 1px;
+  }
+
+  .page {
+    flex: 1;
+    padding: clamp(20px, 3vw, 40px) clamp(16px, 4vw, 48px);
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    padding-bottom: 8px;
+    margin-bottom: clamp(14px, 2vw, 20px);
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 14px;
+  }
+
+  .hero-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 72px);
+    line-height: 1.1;
+    color: var(--navy);
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-heading em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: clamp(14px, 2vw, 15.5px);
+    color: var(--ink-mid);
+    max-width: 100%;
+    line-height: var(--line-height);
+    /* padding-top nudges text to sit centred between lines rather than at the top of each line */
+    padding-top: 5px;
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid;
+    white-space: nowrap;
+  }
+
+  .badge-offline {
+    color: var(--green);
+    background: var(--green-bg);
+    border-color: var(--green-border);
+  }
+
+  .badge-local {
+    color: var(--navy);
+    background: var(--blue-bg);
+    border-color: var(--blue-border);
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* ─── Section titles ─── */
+  .section-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    font-weight: 500;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule-strong);
+  }
+
+  /* ─── Mode Cards ─── */
+  .modes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: clamp(18px, 2.5vw, 28px);
+  }
+
+  .mode-card {
+    padding: clamp(20px, 3vw, 32px);
+    background: #eeeae0;
+    border: 1.5px solid var(--rule-strong);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .mode-card:first-child {
+    border-right: none;
+  }
+
+  .mode-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .mode-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 3vw, 26px);
+    color: var(--navy);
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.25;
+  }
+
+  .mode-desc {
+    font-size: 13.5px;
+    color: var(--ink-mid);
+    line-height: 1.65;
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1.5px solid;
+    font-weight: 500;
+  }
+
+  .tag-green {
+    color: var(--green);
+    background: var(--green-bg);
+    border-color: var(--green-border);
+  }
+
+  .tag-amber {
+    color: var(--amber);
+    background: var(--amber-bg);
+    border-color: var(--amber-border);
+  }
+
+  .tag-blue {
+    color: var(--blue);
+    background: var(--blue-bg);
+    border-color: var(--blue-border);
+  }
+
+  /* ─── Download Section ─── */
+  .download-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .dl-card {
+    border: 1.5px solid var(--rule-strong);
+    border-radius: var(--radius);
+    padding: clamp(16px, 2.5vw, 24px);
+    background: #eeeae0;
+    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .dl-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    border-color: var(--navy-light);
+  }
+
+  .dl-os-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+
+  .dl-os-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3vw, 28px);
+    color: var(--navy);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .dl-ext {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  .dl-note {
+    font-size: 12px;
+    color: var(--ink-light);
+    font-weight: 300;
+  }
+
+  .dl-alt {
+    font-size: 12.5px;
+    color: var(--ink-light);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dl-alt a {
+    color: var(--navy-light);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--blue-border);
+    padding-bottom: 1px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .dl-alt a:hover {
+    color: var(--navy);
+    border-color: var(--navy);
+  }
+
+  .dl-alt .sep {
+    color: var(--rule-strong);
+  }
+
+  /* ─── Details Section ─── */
+  .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: clamp(18px, 2.5vw, 28px);
+  }
+
+  .detail-card {
+    border: 1.5px solid var(--rule-strong);
+    border-radius: var(--radius);
+    padding: clamp(18px, 2.5vw, 28px);
+    background: #eeeae0;
+  }
+
+  .detail-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    color: var(--navy);
+    font-weight: 700;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .detail-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .detail-list li {
+    font-size: 13.5px;
+    color: var(--ink-mid);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .detail-list li::before {
+    content: '—';
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ─── Footer bar ─── */
+  .footer-bar {
+    border-top: 1.5px solid var(--rule-strong);
+    padding-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .footer-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .footer-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ink-mid);
+    background: rgba(255,255,255,0.7);
+    border: 1.5px solid var(--rule-strong);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: var(--ink-light);
+    font-weight: 300;
+  }
+
+  /* ─── Dividers ─── */
+  .section-gap {
+    margin-bottom: clamp(18px, 2.5vw, 28px);
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 680px) {
+    .download-grid {
+      grid-template-columns: 1fr;
+    }
+    .details-grid {
+      grid-template-columns: 1fr;
+    }
+    .footer-bar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .hero-heading { font-size: 36px; }
+    .badge { font-size: 10px; padding: 5px 10px; }
+    .page-outer { padding-left: 18px; }
+    .margin-line { margin-right: 18px; }
+    .page { padding-left: 10px; padding-right: 14px; }
+  }
+</style>
+</head>
+<body class="lined-bg">
+
+<!-- ─── Navigation ─── -->
+<nav>
+  <span class="nav-brand">HSC Exam Preparation</span>
+  <span class="nav-ver">v0.1.0</span>
+</nav>
+
+<!-- ─── Main Page ─── -->
+<div class="page-outer">
+  <div class="margin-line"></div>
+  <main class="page">
+
+  <!-- Hero -->
+  <section class="hero">
+    <p class="hero-label">HSC Study Tool</p>
+    <h1 class="hero-heading">HSC<em>Practice</em></h1>
+    <p class="hero-sub">
+      A desktop app for HSC exam practice. Study from real past questions or generate AI-augmented practice questions tailored to your syllabus.
+    </p>
+
+  </section>
+
+  <!-- Two Ways to Study -->
+  <section class="section-gap">
+    <p class="section-title">Two ways to study</p>
+    <div class="modes-grid">
+
+      <div class="mode-card">
+        <p class="mode-label">Mode 1 · Verbatim</p>
+        <h2 class="mode-title">Real Past Questions</h2>
+        <p class="mode-desc">
+          Retrieve genuine questions from past HSC exams. Filter by subject, section, marks, and topic to find exactly what you need.
+        </p>
+        <div class="tag-row">
+          <span class="tag tag-green">Verbatim NESA HSC questions</span>
+          <span class="tag tag-green">Fully offline</span>
+        </div>
+      </div>
+
+      <div class="mode-card">
+        <p class="mode-label">Mode 2 · Augmented</p>
+        <h2 class="mode-title">AI Practice Questions</h2>
+        <p class="mode-desc">
+          AI generates fresh practice questions modelled on real HSC exam style and syllabus dot points. Different questions every session.
+        </p>
+        <div class="tag-row">
+          <span class="tag tag-blue">AI-generated</span>
+          <span class="tag tag-blue">Syllabus-aligned</span>
+          <span class="tag tag-amber">Requires internet</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Download -->
+  <section class="section-gap">
+    <p class="section-title">Download</p>
+    <div class="download-grid">
+
+      <a class="dl-card" href="https://github.com/Lachysagit/Education-RAG/releases/latest/download/HSCPractice_0.1.0_aarch64.dmg" target="_blank" rel="noopener noreferrer">
+        <p class="dl-os-label">macOS · Apple Silicon</p>
+        <p class="dl-os-name">Mac</p>
+        <p class="dl-ext">.dmg</p>
+        <p class="dl-note">Requires macOS 11 (2020 onwards)</p>
+        <p class="dl-note" style="margin-top:5px; color: var(--ink-mid);">M1, M2, M3 &amp; M4 · MacBook, iMac, Mac mini, Mac Studio, Mac Pro</p>
+      </a>
+
+      <a class="dl-card" href="https://github.com/Lachysagit/Education-RAG/releases/latest/download/HSCPractice_0.1.0_x64-setup.exe" target="_blank" rel="noopener noreferrer">
+        <p class="dl-os-label">Windows · 64-bit</p>
+        <p class="dl-os-name">Windows</p>
+        <p class="dl-ext">.exe installer</p>
+        <p class="dl-note">Windows 10 or later</p>
+      </a>
+
+      <a class="dl-card" href="https://github.com/Lachysagit/Education-RAG/releases/latest/download/HSCPractice_0.1.0_amd64.AppImage" target="_blank" rel="noopener noreferrer">
+        <p class="dl-os-label">Linux · AMD64</p>
+        <p class="dl-os-name">Linux</p>
+        <p class="dl-ext">.AppImage</p>
+        <p class="dl-note">Ubuntu, Debian, Fedora</p>
+      </a>
+
+    </div>
+    <div class="dl-alt">
+      <span>Also available:</span>
+      <a href="https://github.com/Lachysagit/Education-RAG/releases/latest/download/HSCPractice_0.1.0_x64_en-US.msi" target="_blank" rel="noopener noreferrer">Windows MSI .msi</a>
+      <span class="sep">·</span>
+      <a href="https://github.com/Lachysagit/Education-RAG/releases/latest/download/HSCPractice_0.1.0_amd64.deb" target="_blank" rel="noopener noreferrer">Linux Debian .deb</a>
+      <span class="sep">·</span>
+      <a href="https://github.com/Lachysagit/Education-RAG/releases/latest" target="_blank" rel="noopener noreferrer">All release assets ↗</a>
+    </div>
+  </section>
+
+  <!-- Details -->
+  <section class="section-gap">
+    <p class="section-title">Details</p>
+    <div class="details-grid">
+
+      <div class="detail-card">
+        <p class="detail-card-title">Available offline</p>
+        <ul class="detail-list">
+          <li>Browse real past HSC questions</li>
+          <li>Filter and search for precise questions</li>
+          <li>All question data stored locally</li>
+        </ul>
+      </div>
+
+      <div class="detail-card">
+        <p class="detail-card-title">System requirements</p>
+        <ul class="detail-list">
+          <li>Windows 10+ / macOS 11+ / Linux</li>
+          <li>~500 MB disk space</li>
+          <li>4 GB RAM recommended</li>
+          <li>Internet only needed for augmented mode</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer bar -->
+  <footer class="footer-bar">
+    <div class="footer-pills">
+      <span class="footer-pill">Built for NSW students</span>
+      <span class="footer-pill">Economics pack included</span>
+      <span class="footer-pill">More subjects on the way</span>
+    </div>
+    <span class="footer-copy">HSCPractice &copy; 2025</span>
+  </footer>
+
+</main>
+</div>
+
+</body>
+</html>
