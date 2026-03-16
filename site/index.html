@@ -511,7 +511,7 @@
 <!-- ─── Navigation ─── -->
 <nav>
   <span class="nav-brand">HSC Exam Preparation</span>
-  <span class="nav-ver">v0.1.5</span>
+  <span class="nav-ver" id="nav-ver">v0.1.6</span>
 </nav>
 
 <!-- ─── Main Page ─── -->
@@ -567,7 +567,7 @@
     <p class="section-title">Download</p>
     <div class="download-grid">
 
-      <a class="dl-card" href="https://github.com/Lachysagit/HSCPractice-releases/releases/latest/download/HSCPractice_0.1.5_aarch64.dmg" target="_blank" rel="noopener noreferrer">
+      <a id="dl-mac" class="dl-card" href="https://github.com/Lachysagit/HSCPractice-releases/releases/latest/download/HSCPractice_0.1.6_aarch64.dmg" target="_blank" rel="noopener noreferrer">
         <p class="dl-os-label">macOS · Apple Silicon</p>
         <p class="dl-os-name">Mac</p>
         <p class="dl-ext">.dmg</p>
@@ -575,14 +575,14 @@
         <p class="dl-note" style="margin-top:5px; color: var(--ink-mid);">M1, M2, M3 &amp; M4 · MacBook, iMac, Mac mini, Mac Studio, Mac Pro</p>
       </a>
 
-      <a class="dl-card" href="https://github.com/Lachysagit/HSCPractice-releases/releases/latest/download/HSCPractice_0.1.5_x64-setup.exe" target="_blank" rel="noopener noreferrer">
+      <a id="dl-win" class="dl-card" href="https://github.com/Lachysagit/HSCPractice-releases/releases/latest/download/HSCPractice_0.1.6_x64-setup.exe" target="_blank" rel="noopener noreferrer">
         <p class="dl-os-label">Windows · 64-bit</p>
         <p class="dl-os-name">Windows</p>
         <p class="dl-ext">.exe installer</p>
         <p class="dl-note">Windows 10 or later</p>
       </a>
 
-      <a class="dl-card" href="https://github.com/Lachysagit/HSCPractice-releases/releases/latest/download/HSCPractice_0.1.5_amd64.AppImage" target="_blank" rel="noopener noreferrer">
+      <a id="dl-linux" class="dl-card" href="https://github.com/Lachysagit/HSCPractice-releases/releases/latest/download/HSCPractice_0.1.6_amd64.AppImage" target="_blank" rel="noopener noreferrer">
         <p class="dl-os-label">Linux · AMD64</p>
         <p class="dl-os-name">Linux</p>
         <p class="dl-ext">.AppImage</p>
@@ -592,9 +592,9 @@
     </div>
     <div class="dl-alt">
       <span>Also available:</span>
-      <a href="https://github.com/Lachysagit/HSCPractice-releases/releases/latest/download/HSCPractice_0.1.5_x64_en-US.msi" target="_blank" rel="noopener noreferrer">Windows MSI .msi</a>
+      <a id="dl-msi" href="https://github.com/Lachysagit/HSCPractice-releases/releases/latest/download/HSCPractice_0.1.6_x64_en-US.msi" target="_blank" rel="noopener noreferrer">Windows MSI .msi</a>
       <span class="sep">·</span>
-      <a href="https://github.com/Lachysagit/HSCPractice-releases/releases/latest/download/HSCPractice_0.1.5_amd64.deb" target="_blank" rel="noopener noreferrer">Linux Debian .deb</a>
+      <a id="dl-deb" href="https://github.com/Lachysagit/HSCPractice-releases/releases/latest/download/HSCPractice_0.1.6_amd64.deb" target="_blank" rel="noopener noreferrer">Linux Debian .deb</a>
       <span class="sep">·</span>
       <a href="https://github.com/Lachysagit/HSCPractice-releases/releases/latest" target="_blank" rel="noopener noreferrer">All release assets ↗</a>
     </div>
@@ -640,5 +640,27 @@
 </main>
 </div>
 
+<script>
+  fetch('https://api.github.com/repos/Lachysagit/HSCPractice-releases/releases/latest')
+    .then(r => r.json())
+    .then(data => {
+      if (data.tag_name) {
+        document.getElementById('nav-ver').textContent = data.tag_name;
+      }
+      if (!Array.isArray(data.assets)) return;
+      const map = [
+        { id: 'dl-mac',   match: n => n.endsWith('.dmg') },
+        { id: 'dl-win',   match: n => n.endsWith('-setup.exe') },
+        { id: 'dl-linux', match: n => n.endsWith('.AppImage') },
+        { id: 'dl-msi',   match: n => n.endsWith('.msi') },
+        { id: 'dl-deb',   match: n => n.endsWith('.deb') },
+      ];
+      map.forEach(({ id, match }) => {
+        const asset = data.assets.find(a => match(a.name));
+        if (asset) document.getElementById(id).href = asset.browser_download_url;
+      });
+    })
+    .catch(() => {});
+</script>
 </body>
 </html>
